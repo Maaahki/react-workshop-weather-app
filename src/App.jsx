@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import HelloWorld from './components/HelloWorld';
+import WeatherTile from './components/WeatherTile';
 
 function App() {
-  return <HelloWorld name="Audience" />;
+  return <WeatherTile locationName="Karlsruhe" temperature={25} minTemperature={15} maxTemperature={30} />;
 }
 
 export default App;
