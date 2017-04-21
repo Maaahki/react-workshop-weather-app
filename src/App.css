@@ -1,0 +1,124 @@
+.weather-app {
+  font-family: sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.city-search {
+  width: 100%;
+  background-color: white;
+  padding: 0.5em;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 1px solid;
+  border-color: #CCC;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.city-search:focus {
+  border-color: #2196F3;
+}
+
+.weather-tile__favicon:focus {
+  border: 1px solid #2196F3;
+  border-radius: 4px;
+  outline: none;
+}
+
+.city-result-info {
+  margin: 0.5em;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.weather-list {
+  margin: 1em 0;
+  padding: 0;
+  text-align: center;
+}
+.weather-tile {
+  display: inline-block;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 0 5px #AAA;
+  margin: 0.3em;
+  padding: 0.8em 0.5em;
+  text-align: initial;
+}
+
+.weather-tile::before {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 4px;
+  text-align: right;
+  padding: 0.3em;
+  box-sizing: border-box;
+}
+
+.weather-tile--missing::before {
+  content: '?';
+  background: repeating-linear-gradient(-45deg, #ccc, #ccc, 5px, rgba(255,255,255,1) 5px, rgba(255,255,255,1) 10px);
+}
+
+.weather-tile--sunny::before {
+  content: '☀';
+  background-color: yellow;
+}
+
+.weather-tile--cloudy::before {
+  content: '☁';
+  background-color: lightgray;
+}
+
+.weather-tile--rainy::before {
+  content: '☂';
+  background-color: #81D4FA;
+}
+
+.weather-tile__city {
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin: 0;
+  width: 200px;
+}
+
+.weather-tile__temperature {
+  float: right;
+  font-weight: normal;
+  color: #555;
+  font-size: 1.5em;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.temperature__min,
+.temperature__max {
+  font-size: 0.7em;
+  color: #999;
+}
+
+.temperature__min::before {
+  content: '↓';
+}
+
+.temperature__max::before {
+  content: '↑';
+}
+
+.temperature__current {
+  margin-left: 0.3em;
+}
+
+.weather-tile__favicon {
+  background: none;
+  border: 1px solid transparent;
+  width: auto;
+  padding: 0.2em;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #FBC02D;
+}
