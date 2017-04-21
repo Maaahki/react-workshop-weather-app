@@ -7,7 +7,11 @@ export const weatherTilePropTypes = {
   minTemperature: PropTypes.number.isRequired,
   maxTemperature: PropTypes.number.isRequired,
   temperature: PropTypes.number.isRequired,
-  state: PropTypes.string.isRequired
+  state: PropTypes.string
+};
+
+const defaultProps = {
+  state: 'missing'
 };
 
 class WeatherTile extends React.Component {
@@ -64,5 +68,6 @@ class WeatherTile extends React.Component {
 }
 
 WeatherTile.propTypes = weatherTilePropTypes;
+WeatherTile.defaultProps = defaultProps;
 
 export default WeatherTile;
