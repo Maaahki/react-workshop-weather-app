@@ -1,4 +1,5 @@
 import React from 'react';
+import FavIcon from './FavIcon';
 
 function WeatherTile(props) {
   return (
@@ -9,6 +10,7 @@ function WeatherTile(props) {
         <span className="temperature__max">{props.maxTemperature}°</span>
         <span className="temperature__current">{props.temperature}°</span>
       </div>
+      <FavIcon />
     </div>
   );
 }
