@@ -33,11 +33,12 @@ class WeatherTile extends React.Component {
       locationName,
       minTemperature,
       maxTemperature,
-      temperature
+      temperature,
+      state
     } = this.props;
 
     return (
-      <div className="weather-tile weather-tile--rainy">
+      <li className={`weather-tile weather-tile--${state}`}>
         <h1 className="weather-tile__city">{locationName}</h1>
         <div className="weather-tile__temperature">
           <span className="temperature__min">{minTemperature}°</span>
@@ -48,7 +49,7 @@ class WeatherTile extends React.Component {
           faved={faved}
           onClick={this.handleClickFavIcon}
         />
-      </div>
+      </li>
     );
   }
 }
