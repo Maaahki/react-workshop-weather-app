@@ -1,4 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+
+FavIcon.propTypes = {
+  faved: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
+};
 
 function FavIcon(props) {
   const { faved, onClick } = props;

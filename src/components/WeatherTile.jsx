@@ -1,5 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import FavIcon from './FavIcon';
+
+export const weatherTilePropTypes = {
+  locationName: PropTypes.string.isRequired,
+  minTemperature: PropTypes.number.isRequired,
+  maxTemperature: PropTypes.number.isRequired,
+  temperature: PropTypes.number.isRequired,
+  state: PropTypes.string.isRequired
+};
 
 class WeatherTile extends React.Component {
   constructor(props) {
@@ -53,5 +62,7 @@ class WeatherTile extends React.Component {
     );
   }
 }
+
+WeatherTile.propTypes = weatherTilePropTypes;
 
 export default WeatherTile;

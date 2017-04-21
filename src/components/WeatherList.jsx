@@ -1,5 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import WeatherTile from './WeatherTile';
+import WeatherTile, { weatherTilePropTypes } from './WeatherTile';
+
+const propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape(weatherTilePropTypes)
+  ).isRequired
+};
 
 class WeatherList extends React.Component {
 
@@ -22,5 +29,7 @@ class WeatherList extends React.Component {
   }
 
 }
+
+WeatherList.propTypes = propTypes;
 
 export default WeatherList;
