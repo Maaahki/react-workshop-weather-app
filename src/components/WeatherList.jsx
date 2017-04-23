@@ -68,7 +68,8 @@ function mapStateToProps(state) {
   const { favedLocations, currentWeatherInfo } = state;
   return {
     favedLocations,
-    data: currentWeatherInfo
+    data: currentWeatherInfo.filteredWeatherData,
+    query: currentWeatherInfo.query
   };
 }
 

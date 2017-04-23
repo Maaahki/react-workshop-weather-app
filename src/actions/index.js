@@ -5,6 +5,7 @@ import { queryCurrentWeatherInfo } from '../utils';
 export const TOGGLE_FAV = 'TOGGLE_FAV';
 export const REQUEST_LOCATIONS = 'REQUEST_LOCATIONS';
 export const RECEIVE_LOCATIONS = 'RECEIVE_LOCATIONS';
+export const UPDATE_QUERY = 'UPDATE_QUERY';
 
 // This defines an action.
 // A action must have a `type` property and can have arbitrary payload.
@@ -33,5 +34,12 @@ export function fetchWeatherData() {
     dispatch(requestLocations());
     return queryCurrentWeatherInfo()
       .then((data) => dispatch(receiveLocations(data)));
+  }
+}
+
+export function updateQuery(query) {
+  return {
+    type: UPDATE_QUERY,
+    query
   }
 }
