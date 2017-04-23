@@ -1,17 +1,40 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import WeatherTile, { weatherTilePropTypes } from './WeatherTile';
+import { connect } from 'react-redux';
+import WeatherTile from './WeatherTile';
+import { toggleFav } from '../actions';
 
 const propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape(weatherTilePropTypes)
-  ).isRequired
+    PropTypes.shape({
+      locationName: PropTypes.string.isRequired,
+      minTemperature: PropTypes.number.isRequired,
+      maxTemperature: PropTypes.number.isRequired,
+      temperature: PropTypes.number.isRequired,
+      state: PropTypes.string
+    })
+  ).isRequired,
+  favedLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onToggleFav: PropTypes.func.isRequired
 };
 
 class WeatherList extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.handleToggleFav = this.handleToggleFav.bind(this);
+  }
+
+  handleToggleFav(event, locationName) {
+    event.preventDefault();
+    
+    const { onToggleFav } = this.props;
+    onToggleFav(locationName);
+  }
+
   render() {
-    const { data } = this.props;
+    const { data, favedLocations } = this.props;
     return (
       <ul className="weather-list">
         { data.map((item) => (
@@ -22,6 +45,8 @@ class WeatherList extends React.Component {
               maxTemperature={item.maxTemperature}
               temperature={item.temperature}
               state={item.state}
+              faved={favedLocations.indexOf(item.locationName) > -1}
+              onClickFavIcon={(event) => this.handleToggleFav(event, item.locationName)}
             />
           )) }
       </ul>
@@ -32,4 +57,22 @@ class WeatherList extends React.Component {
 
 WeatherList.propTypes = propTypes;
 
-export default WeatherList;
+function mapStateToProps(state) {
+  const { favedLocations } = state;
+  return { favedLocations };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onToggleFav: (locationName) => {
+      dispatch(toggleFav(locationName));
+    }
+  };
+}
+
+const ConnectedWeatherList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WeatherList);
+
+export default ConnectedWeatherList;
