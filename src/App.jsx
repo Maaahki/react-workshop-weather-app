@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
-import  { createStore } from 'redux';
+import  { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
 
 import SearchBox from './components/SearchBox';
 import WeatherList from './components/WeatherList';
@@ -9,7 +10,11 @@ import { filterData, queryCurrentWeatherInfo } from './utils';
 import weatherApp from './reducers';
 
 // Create store that is used as a singleton accross the application.
-const store = createStore(weatherApp);
+// Apply middleware to add further capabilities to the redux store.
+const store = createStore(
+  weatherApp,
+  applyMiddleware(logger)
+);
 
 class App extends React.Component {
   constructor(props) {
