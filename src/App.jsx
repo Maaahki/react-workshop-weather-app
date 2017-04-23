@@ -3,17 +3,22 @@ import './App.css';
 import { Provider } from 'react-redux';
 import  { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import SearchBox from './components/SearchBox';
 import WeatherList from './components/WeatherList';
-import { filterData, queryCurrentWeatherInfo } from './utils';
+import { filterData } from './utils';
 import weatherApp from './reducers';
+import { fetchWeatherData } from './actions';
 
 // Create store that is used as a singleton accross the application.
 // Apply middleware to add further capabilities to the redux store.
 const store = createStore(
   weatherApp,
-  applyMiddleware(logger)
+  applyMiddleware(
+    thunk,
+    logger
+  )
 );
 
 class App extends React.Component {
@@ -23,8 +28,7 @@ class App extends React.Component {
     // Initial state
     this.state = {
       query: '',
-      results: [],
-      rawData: []
+      results: []
     }
 
     // Bind handler to instance
@@ -34,23 +38,23 @@ class App extends React.Component {
   componentDidMount() {
     // It's safe to do networking after the component has been mounted,
     // so make a request to the back-end in order to query the data.
-    queryCurrentWeatherInfo()
-      .then((rawData) => {
+    store
+      .dispatch(fetchWeatherData())    // dispatch action that fetches the weather data
+      .then(() => {                    // temporary update state until this part is also handled by redux
         const { query } = this.state;
         this.setState({
-          rawData,
           query,
-          results: filterData(rawData, query)
+          results: store.getState().currentWeatherInfo
         });
       });
   }
 
   handleChangeSearchBox(event) {
     const value = event.target.value;
-    const { rawData } = this.state;
+    const { currentWeatherInfo } = store.getState();
 
     const query = (typeof value !== 'string' || !value.length) ? '' : value;
-    const results = filterData(rawData, value);
+    const results = filterData(currentWeatherInfo, value);
 
     // Update state with new query and values
     this.setState({ query, results });
@@ -71,7 +75,7 @@ class App extends React.Component {
             Found {results.length} cities
           </div>
 
-          <WeatherList data={results} />
+          <WeatherList query={query} />
         </main>
       </Provider>
     );

@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WeatherTile from './WeatherTile';
 import { toggleFav } from '../actions';
+import { filterData } from '../utils';
 
 const propTypes = {
   data: PropTypes.arrayOf(
@@ -14,6 +15,7 @@ const propTypes = {
       state: PropTypes.string
     })
   ).isRequired,
+  query: PropTypes.string,
   favedLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   onToggleFav: PropTypes.func.isRequired
 };
@@ -28,16 +30,21 @@ class WeatherList extends React.Component {
 
   handleToggleFav(event, locationName) {
     event.preventDefault();
-    
+
     const { onToggleFav } = this.props;
     onToggleFav(locationName);
   }
 
   render() {
-    const { data, favedLocations } = this.props;
+    const { data, favedLocations, query } = this.props;
+
+    // Temporary solution to filter data, because filtered data is not yet
+    // available via the store.
+    const filteredData = filterData(data, query);
+
     return (
       <ul className="weather-list">
-        { data.map((item) => (
+        { filteredData.map((item) => (
             <WeatherTile
               key={item.locationName}
               locationName={item.locationName}
@@ -58,8 +65,11 @@ class WeatherList extends React.Component {
 WeatherList.propTypes = propTypes;
 
 function mapStateToProps(state) {
-  const { favedLocations } = state;
-  return { favedLocations };
+  const { favedLocations, currentWeatherInfo } = state;
+  return {
+    favedLocations,
+    data: currentWeatherInfo
+  };
 }
 
 function mapDispatchToProps(dispatch) {
