@@ -1,4 +1,5 @@
 const JSDOM = require('jsdom').JSDOM;
+const fetch = require('isomorphic-fetch');
 
 const dom = new JSDOM('');
 
@@ -14,3 +15,5 @@ Object.keys(global.window).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js'
 };
+
+global.window.fetch = fetch;
