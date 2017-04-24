@@ -3,8 +3,6 @@
 Beispielanwendung einer Wetter-App, die Wetterinformationen für Orte anzeigt.
 Diese Anwendung wird parallel zum React-Einsteiger-Workshop entwickelt.
 
-Das Projekt basiert auf [Create React App](https://github.com/facebookincubator/create-react-app).
-
 ## Step-by-step Entwicklung der Applikation über den Workshop hinweg
 
 ### Tag 1
