@@ -15,7 +15,6 @@ const propTypes = {
       state: PropTypes.string
     })
   ).isRequired,
-  query: PropTypes.string,
   favedLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   onToggleFav: PropTypes.func.isRequired
 };
@@ -36,15 +35,11 @@ class WeatherList extends React.Component {
   }
 
   render() {
-    const { data, favedLocations, query } = this.props;
-
-    // Temporary solution to filter data, because filtered data is not yet
-    // available via the store.
-    const filteredData = filterData(data, query);
+    const { data, favedLocations } = this.props;
 
     return (
       <ul className="weather-list">
-        { filteredData.map((item) => (
+        { data.map((item) => (
             <WeatherTile
               key={item.locationName}
               locationName={item.locationName}
@@ -68,8 +63,7 @@ function mapStateToProps(state) {
   const { favedLocations, currentWeatherInfo } = state;
   return {
     favedLocations,
-    data: currentWeatherInfo.filteredWeatherData,
-    query: currentWeatherInfo.query
+    data: currentWeatherInfo.filteredWeatherData
   };
 }
 
@@ -86,4 +80,5 @@ const ConnectedWeatherList = connect(
   mapDispatchToProps
 )(WeatherList);
 
+export { WeatherList };
 export default ConnectedWeatherList;
